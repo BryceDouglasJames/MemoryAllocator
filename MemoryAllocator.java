@@ -84,8 +84,6 @@ class MemoryAllocator {
                         else
                             Writer.write("-1");
 
-                        // Hardcoded code output to file
-                        // Writer.write("100 310 2\n600 790 1\n1500 1705 3\n-0");
                         Writer.close();
                         break;
                     case "!Q":
