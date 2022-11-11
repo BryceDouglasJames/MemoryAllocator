@@ -19,4 +19,5 @@ public class MemoryBlock {
     public String toString() {
         return "Size: " + this.size + "\tStart: " + this.start + "\tEnd: " + this.end;
     }
+
 }

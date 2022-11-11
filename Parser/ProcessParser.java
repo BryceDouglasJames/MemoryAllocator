@@ -9,10 +9,7 @@ import java.util.Scanner;
 
 public class ProcessParser {
     Scanner process_scanner;
-
-    // TODO generate a process as its own type to be added to list
     public List<Process> process_list;
-
     public int total_processes = 0;
 
     public ProcessParser(String filename) throws FileNotFoundException {
