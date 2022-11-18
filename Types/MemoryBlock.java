@@ -17,7 +17,8 @@ public class MemoryBlock {
 
     @Override
     public String toString() {
-        return "Size: " + this.size + "\tStart: " + this.start + "\tEnd: " + this.end;
+        return "Size: " + this.size + "\tStart: " + this.start + "\tEnd: " + this.end + "\tisAssigned: " + this.isTaken
+                + "\tprocess: " + this.process.toString();
     }
 
 }

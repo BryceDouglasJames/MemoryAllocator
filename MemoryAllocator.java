@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -98,13 +99,22 @@ class MemoryAllocator {
                          * 
                          */
                         PriorityQueue<Types.MemoryBlock> temp_queue = mem_parser.mem_min_list;
+                        /*
+                         * for (Types.MemoryBlock bl : temp_queue) {
+                         * System.out.println(bl.size);
+                         * }
+                         */
+                        for (Types.MemoryBlock bl : temp_queue) {
+                            System.out.println(bl.size);
+                        }
+
                         process_index = 0;
                         for (int i = 0; i < process_parser.total_processes; i++) {
                             Types.Process p = process_parser.process_list.get(process_index);
                             for (Types.MemoryBlock current_block : temp_queue) {
                                 if (!current_block.isTaken) {
                                     if (p.size <= current_block.size) {
-                                        //System.out.println("HERE WITH PROCESS " + p.id + "\n");
+                                        // System.out.println("HERE WITH PROCESS " + p.id + "\n");
                                         current_block.process = p;
                                         current_block.isTaken = true;
                                         p.assigned = true;
@@ -118,13 +128,46 @@ class MemoryAllocator {
                         output_gen("OutputFiles/bfoutput.data", process_parser, mem_parser);
                         break;
 
+                    case "3":
+                        ArrayList<Types.MemoryBlock> this_queue = mem_parser.mem_max_list;
+                        for (Types.MemoryBlock bl : this_queue) {
+                            System.out.println(bl.size);
+                        }
+                        process_index = 0;
+                        for (int i = 0; i < process_parser.total_processes; i++) {
+                            Types.Process p = process_parser.process_list.get(process_index);
+                            for (Types.MemoryBlock current_block : this_queue) {
+                                System.out.println("AHHHH" + current_block.size);
+                                if (!current_block.isTaken) {
+                                    if (p.size <= current_block.size) {
+                                        // System.out.println("HERE WITH PROCESS " + p.id + "\n");
+                                        current_block.process = p;
+                                        current_block.isTaken = true;
+                                        p.assigned = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            process_index += 1;
+                        }
+
+                        /*
+                         * for (Types.MemoryBlock current_block : this_queue) {
+                         * System.out.println("OII" + current_block.toString());
+                         * }
+                         */
+
+                        output_gen("OutputFiles/wfoutput.data", process_parser, mem_parser);
+                        break;
                     case "!Q":
                         System.exit(1);
                     default:
                         System.out.println("Oh no... That command isn't allowed here.");
                 }
             } while (!answer.equals("!Q"));
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             System.out.println(e);
         }
     }

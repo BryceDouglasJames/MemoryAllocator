@@ -2,6 +2,7 @@ package Parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,9 +19,17 @@ class SortBySize implements Comparator<MemoryBlock> {
 
 public class MemoryParser {
 
+    public class Reverse implements Comparator<MemoryBlock> {
+        public int compare(MemoryBlock arg0, MemoryBlock arg1) {
+            return arg1.size - arg0.size;
+        }
+    }
+
     Scanner mem_scanner;
     public List<MemoryBlock> mem_list;
     public PriorityQueue<MemoryBlock> mem_min_list;
+    public PriorityQueue<MemoryBlock> mem_max_queue;
+    public ArrayList<MemoryBlock> mem_max_list;
     public int total_blocks = 0;
 
     public MemoryParser(String filename) throws FileNotFoundException {
@@ -43,9 +52,14 @@ public class MemoryParser {
             System.out.println("There is an error in the formatting of you memory input file... please try again.");
         }
 
-        // Collections.sort(mem_list, new SortBySize());
+        mem_max_queue = new PriorityQueue<>(100, new Reverse());
+        for (MemoryBlock i : mem_min_list)
+            mem_max_queue.add(i);
 
-        mem_scanner.close();
+        mem_max_list = new ArrayList<>();
+        while (!mem_max_queue.isEmpty()) {
+            mem_max_list.add(mem_max_queue.poll());
+        }
     }
 
     @Override
